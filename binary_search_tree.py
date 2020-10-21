@@ -1,36 +1,39 @@
-class node:
+class Node:
     def __init__(self,value=None):
         self.value = value 
         self.left_child = None
         self.right_child = None 
-        self.parent = None 
-class binary_search_tree:
+        self.parent = None
+
+class BinarySearchTree:
     def __init__(self):
-        self.root = None #Starting node at the top of the tree
-    
+        self.root = None
+
     def insert(self,value):
-        if self.root == None: #Checks if root node is empty and if so it fills the root node
-            self.root = node(value)
+        #Fills root node if it is empty
+        if self.root == None:
+            self.root = Node(value)
+        #Recursively places node on tree
         else:
-            self._insert(value,self.root) #Otherwise it calls a recursive, private function to place the value on the tree 
-            
+            self._insert(value,self.root) 
+
     def _insert(self,value,cur_node):
         if value < cur_node.value:
-            if cur_node.left_child == None: #If there is no left child, it creates a new node and sets it = to the left child
-                cur_node.left_child = node(value)
-                cur_node.left_child.parent = cur_node #Setting the parent 
-            else: #Otherwise if there is a left child it continues down the tree w/ a recursive call 
+            if cur_node.left_child == None: 
+                cur_node.left_child = Node(value)
+                cur_node.left_child.parent = cur_node
+            else: 
                 self._insert(value,cur_node.left_child)           
         elif value > cur_node.value:
             if cur_node.right_child == None:
-                cur_node.right_child = node(value)
-                cur_node.right_child.parent = cur_node #Setting the parent 
+                cur_node.right_child = Node(value)
+                cur_node.right_child.parent = cur_node  
             else:
                 self._insert(value,cur_node.right_child)    
         else:
             print("Value Already in tree!")   
 
-    def print_tree(self): #Prints it in order (somehow)
+    def print_tree(self): 
         if self.root != None:
             self._print_tree(self.root)
 
@@ -120,14 +123,14 @@ class binary_search_tree:
             self.delete_node(successor)
 
 
-    def search(self,value): #Returns T/F if the value is located in the tree
+    def search(self,value):
         if self.root != None:
             return self._search(value,self.root)
         else:
             return False
 
     def _search(self,value,cur_node):
-        if value == cur_node.value: #Base Case
+        if value == cur_node.value:
             return True
         elif value < cur_node.value and cur_node.left_child != None:
             return self._search(value,cur_node.left_child)
